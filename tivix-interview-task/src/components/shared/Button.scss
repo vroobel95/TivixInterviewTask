@@ -1,0 +1,19 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  cursor: pointer;
+
+  &.search {
+    border-radius: 50px;
+    border: medium solid #93b5e1;
+    background-color: #93b5e1;
+    color: #ffffff;
+    box-shadow: 0 0.2em rgba(0, 0, 0, 0.4);
+
+    &:hover {
+        background-color: #495a70;
+        border-color: #495a70;
+    }
+  }
+}

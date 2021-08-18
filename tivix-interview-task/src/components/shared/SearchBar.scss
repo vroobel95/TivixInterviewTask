@@ -1,0 +1,30 @@
+.search-bar {
+  height: 30px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  padding: 20px 0;
+  width: 100vw;
+  justify-content: center;
+
+  .search-items {
+    width: 25vw;
+    display: flex;
+
+    justify-content: flex-end;
+    .search-input {
+      width: 25vw;
+      border-radius: 50px;
+      border: medium solid #93B5E1;
+      height: 30px;
+      position: absolute;
+      display: flex;
+    }
+
+    .button {
+      width: 6vw;
+      height: 35px;
+      position: relative;
+    }
+  }
+}
