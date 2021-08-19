@@ -10,19 +10,29 @@ import WeatherList from "../weather/WeatherList";
 import TabsBar from "../shared/TabsBar";
 import * as _ from "lodash";
 import HourWeatherModel from "../../models/HourWeatherModel";
+import CurrentWeather from "../weather/CurrentWeather";
+import WeatherHelper from "../../helpers/WeatherHelper";
 
 const _weatherApiClient = new WeatherApiClient();
 
 const MainPage: React.FC = () => {
   const [weatherModel, setWeatherModel] = useState<HourWeatherListModel>();
   const [dates, setDates] = useState<string[]>();
-  const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedDateWeathers, setSelectedDateWeathers] = useState<HourWeatherModel[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedDateWeathers, setSelectedDateWeathers] = useState<
+    HourWeatherModel[]
+  >([]);
+  const [error, setError] = useState<string>('');
 
   const handleButtonClick = async () => {
-    const weathers = _weatherApiClient.getWeather("Londyn");
-    const { data } = await weathers;
-    setWeatherModel(data as HourWeatherListModel);
+    try {
+      const weathers = _weatherApiClient.getWeather("Londyn");
+      const { data } = await weathers;
+      setWeatherModel(data as HourWeatherListModel);
+    } catch (error) {
+      setError("Wystąpił błąd podczas pobierania danych");
+    }
+    
   };
 
   useEffect(() => {
@@ -40,14 +50,17 @@ const MainPage: React.FC = () => {
 
   useEffect(() => {
     if (weatherModel) {
-      setSelectedDateWeathers(weatherModel.list.filter(x => x.dt_txt.includes(selectedDate)));
+      setSelectedDateWeathers(
+        weatherModel.list.filter((x) => x.dt_txt.includes(selectedDate))
+      );
     }
-  }, [weatherModel, selectedDate])
+  }, [weatherModel, selectedDate]);
 
   return (
     <div className="main-page">
       <div className="title">{"Znajdź pogodę dla swojego miasta"}</div>
       <SearchBar onClick={handleButtonClick} />
+      {error ? <div className="error"></div> : null}
       {weatherModel && dates ? (
         <TabsBar<string>
           items={dates?.map((date) => ({
@@ -58,8 +71,47 @@ const MainPage: React.FC = () => {
           onSelectedTabChange={(date) => setSelectedDate(date)}
         />
       ) : null}
+      {selectedDate && weatherModel ? (
+        <CurrentWeather
+          meanHumidity={WeatherHelper.getMeanValue(
+            weatherModel.list
+              .filter((w) => w.dt_txt.includes(selectedDate))
+              .map((x) => x.main.humidity)
+          )}
+          maxTemperature={WeatherHelper.getMeanValue(
+            weatherModel.list
+              .filter((w) => w.dt_txt.includes(selectedDate))
+              .map((x) => x.main.temp_max)
+          )}
+          minTemperature={WeatherHelper.getMeanValue(
+            weatherModel.list
+              .filter((w) => w.dt_txt.includes(selectedDate))
+              .map((x) => x.main.temp_min)
+          )}
+          meanTemperatureDay={WeatherHelper.getMeanValue(
+            weatherModel.list
+              .filter(
+                (w) =>
+                  w.dt_txt.includes(selectedDate) &&
+                  +w.dt_txt.split(" ")[1].split(":")[0] >= 6 &&
+                  +w.dt_txt.split(" ")[1].split(":")[0] <= 15
+              )
+              .map((x) => x.main.temp)
+          )}
+          meanTemperatureNight={WeatherHelper.getMeanValue(
+            weatherModel.list
+              .filter(
+                (w) =>
+                  w.dt_txt.includes(selectedDate) &&
+                  +w.dt_txt.split(" ")[1].split(":")[0] >= 18 &&
+                  +w.dt_txt.split(" ")[1].split(":")[0] <= 0
+              )
+              .map((x) => x.main.temp)
+          )}
+        />
+      ) : null}
       {selectedDateWeathers && selectedDate ? (
-        <WeatherList weathers={selectedDateWeathers} date={selectedDate}/>
+        <WeatherList weathers={selectedDateWeathers} date={selectedDate} />
       ) : null}
     </div>
   );

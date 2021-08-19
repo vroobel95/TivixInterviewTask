@@ -1,4 +1,4 @@
-import './WeatherList.scss';
+import "./WeatherList.scss";
 
 import React from "react";
 import IconHelper from "../../helpers/IconHelper";
@@ -22,16 +22,30 @@ const WeatherList: React.FC<WeatherListProps> = (props) => {
   };
 
   const renderContent = (weather: HourWeatherModel) => {
+    const hour = weather.dt_txt
+      .split(" ")[1]
+      .substring(
+        weather.dt_txt.split(" ")[1].length - 3,
+        weather.dt_txt.split(" ")[1].length - 8
+      );
+      
     return (
       <div className="element">
+        <div>{hour}</div>
         <div>
-          {weather.dt_txt.split(' ')[1]}
+          {weather.main.temp}
+          {"°C"}
         </div>
-        <div>{weather.main.temp}{'°C'}</div>
         <div>
-          <img src={IconHelper.getIconByName(weather.weather[0].icon).default} alt=""/>
+          <img
+            src={IconHelper.getIconByName(weather.weather[0].icon).default}
+            alt=""
+          />
         </div>
-        <div>{weather.main.humidity}{'%'}</div>
+        <div>
+          {weather.main.humidity}
+          {"%"}
+        </div>
       </div>
     );
   };

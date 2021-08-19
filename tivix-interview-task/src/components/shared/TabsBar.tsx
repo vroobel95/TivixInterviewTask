@@ -1,7 +1,7 @@
 import './TabsBar.scss';
 
-import React, { PropsWithChildren } from "react";
-import Button from "./Button";
+import { PropsWithChildren } from 'react';
+import Button from './Button';
 
 interface TabItem<T> {
   value: T;
@@ -23,11 +23,16 @@ const TabsBar = <T,>(props: PropsWithChildren<TabsBarProps<T>>) => {
   return (
     <div className="tabs-bar">
       {props.items.map((tab) => {
-        return (<Button
-          onClick={() => handleItemSelect(tab.value)}
-          className="tab-button"
-          text={tab.label}
-        />);
+        return (
+          <div className="button-wrapper">
+            <Button
+              onClick={() => handleItemSelect(tab.value)}
+              className="tab-button"
+              text={new Date(tab.label).toLocaleDateString()}
+            />
+            <div className={'highlight' + (props.selectedItem === tab.value ? ' selected' : '')}></div>
+          </div>
+        );
       })}
     </div>
   );
