@@ -4,6 +4,12 @@
   justify-content: space-evenly;
   cursor: pointer;
 
+  .button-label {
+    font-family: 'AndanaPro-Bold', serif;
+    font-style: normal;
+    font-weight: 500;
+  }
+
   &.search {
     border-radius: 50px;
     border: medium solid #93b5e1;
