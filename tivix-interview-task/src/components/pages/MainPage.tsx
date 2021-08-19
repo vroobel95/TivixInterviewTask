@@ -24,9 +24,9 @@ const MainPage: React.FC = () => {
   >([]);
   const [error, setError] = useState<string>('');
 
-  const handleButtonClick = async () => {
+  const handleButtonClick = async (value: string) => {
     try {
-      const weathers = _weatherApiClient.getWeather("Londyn");
+      const weathers = _weatherApiClient.getWeather(value);
       const { data } = await weathers;
       setWeatherModel(data as HourWeatherListModel);
     } catch (error) {
