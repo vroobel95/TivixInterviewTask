@@ -1,12 +1,14 @@
 .main-page {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 
   .title {
     font-size: 50px;
     display: flex;
     padding: 20px;
-    font-family: 'AndanaPro-Bold', serif;
+    font-family: 'BarlowSemiCondensed-Medium', serif;
     font-style: normal;
     font-weight: 500;
   }

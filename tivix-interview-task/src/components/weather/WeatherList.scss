@@ -1,0 +1,38 @@
+.weather-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .header {
+    height: 40px;
+    width: 90vw;
+    background-color: aquamarine;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0;
+    align-items: center;
+    border-radius: 50px;
+    font-family: "BarlowSemiCondensed-Medium", serif;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .element {
+    height: 100px;
+    width: 90vw;
+    background-color: grey;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 20px 0;
+    align-items: center;
+    border-radius: 50px;
+    font-family: "BarlowSemiCondensed-Medium", serif;
+    font-style: normal;
+    font-weight: 300;
+
+    img {
+      width: 100px;
+      height: 95px;
+    }
+  }
+}

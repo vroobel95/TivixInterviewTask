@@ -1,0 +1,12 @@
+.tabs-bar {
+    height: 40px;
+    width: 65vw;
+    display: flex;
+    flex-wrap: nowrap;
+    border: 1px solid #b8b0ae;
+
+    .tab-button {
+        height: 100%;
+        width: 100%;
+    }
+}
